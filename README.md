@@ -119,42 +119,6 @@ Lembrem-se: **uma das etapas iniciais será implementar um algoritmo clássico d
 - **O que faz:** Acha todos os grupos de pessoas que estão conectadas entre si, mas totalmente isoladas dos outros grupos (componentes conexos).
 - **Retorno esperado:** Uma lista ou coleção agrupando os usuários de cada sub-rede identificada.
 
----
-
-## 🧑‍💻 Divisão de Responsabilidades
-
-Cada integrante atua como desenvolvedor sênior e é responsável por uma fatia bem definida do projeto, da modelagem à entrega.
-
-### Caique dos Santos Brito — RGM 46972960
-**Responsável por:** Estrutura base do grafo (`Vertice.java` e `Aresta.java`) e configuração do ambiente de build.
-- Modelagem e implementação de `Vertice.java` (lista de adjacências, métodos de acesso)
-- Modelagem e implementação de `Aresta.java` (peso, origem, destino)
-- Configuração do projeto Gradle (`build.gradle.kts`, `settings.gradle.kts`)
-- Manutenção do `.gitignore` e estrutura inicial do repositório GitHub
-
-### Gabriel Arthur Andrade Silva — RGM 38418631
-**Responsável por:** Implementação do algoritmo de Dijkstra em `Grafo.java` e da missão de Rota e Custo de Maior Afinidade.
-- Implementação do algoritmo de Dijkstra (menor caminho ponderado) dentro da classe `Grafo`
-- Missão 4: `rotaDeMaiorAfinidade(origem, destino)` — retorna sequência de nomes e custo acumulado
-- Validação do cenário Ana → Fernanda (custo 3 via Bruno e Eduardo vs. custo 13 via Daniela)
-- Testes unitários manuais e revisão da lógica de reconstrução de caminho
-
-### Pietro Santana Fragoso Vasconcelos — RGM 38187515
-**Responsável por:** Missões de Sugestão de Conexões e Grau de Separação no `LinkedInAnalyzer`.
-- Missão 2: `sugerirConexoes(nome)` — amigos de 2º grau ordenados por amigos em comum
-- Missão 3: `grauDeSeparacao(origem, destino)` — BFS para menor número de saltos, retorna `-1` se inalcançável
-- Garantia das regras de filtragem (sem duplicatas, sem o próprio usuário, sem contatos diretos)
-- Definição dos tipos de retorno e contratos dos métodos acima
-
-### Daniel Costa Carvalho Martins — RGM 37196201
-**Responsável por:** Missão de Mapeamento de Grupos Isolados, classe `Main.java` e documentação.
-- Missão 5: `mapearGruposIsolados()` — DFS/BFS para identificar componentes conexos da rede
-- Implementação completa de `Main.java` com o cenário de testes sugerido (Ana, Bruno, Carlos, Daniela, Eduardo, Fernanda, Gabriel, Hugo, Igor, Juliana)
-- Atualização e manutenção deste `README.md`
-- Gravação e publicação do vídeo explicativo no YouTube, upload dos arquivos na pasta `deploy/`
-
----
-
 ## 💡 Sugestão de Cenário para Testes
 
 Para ajudar vocês a validarem o código, aqui está uma sugestão de rede para cadastrar no `main`:

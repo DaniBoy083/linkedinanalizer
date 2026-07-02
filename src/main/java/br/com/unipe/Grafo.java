@@ -401,6 +401,63 @@ public class Grafo {
         return aresta.getVerticeOrigem().equals(vertice) ? aresta.getVerticeDestino() : aresta.getVerticeOrigem();
     }
 
+    public record Caminho(List<String> nomes, int custo) {
+    }
+
+    public Caminho dijkstra(String origem, String destino) {
+        Vertice inicio = encontraVertice(origem).orElseThrow(
+                () -> new IllegalArgumentException("Vertice " + origem + " não encontrado."));
+        Vertice fim = encontraVertice(destino).orElseThrow(
+                () -> new IllegalArgumentException("Vertice " + destino + " não encontrado."));
+
+        Map<Vertice, Integer> dist = new HashMap<>();
+        Map<Vertice, Vertice> anterior = new HashMap<>();
+        for (Vertice v : vertices) {
+            dist.put(v, Integer.MAX_VALUE);
+        }
+        dist.put(inicio, 0);
+
+        PriorityQueue<Vertice> fila = new PriorityQueue<>(Comparator.comparingInt(dist::get));
+        fila.add(inicio);
+        Set<Vertice> fechados = new HashSet<>();
+
+        while (!fila.isEmpty()) {
+            Vertice atual = fila.poll();
+            if (!fechados.add(atual)) {
+                continue;
+            }
+            if (atual.equals(fim)) {
+                break;
+            }
+            for (Vertice vizinho : atual.getAdjacencias()) {
+                if (fechados.contains(vizinho)) {
+                    continue;
+                }
+                int peso = obtemArestasParaVizinho(atual, vizinho).stream()
+                        .map(Aresta::getPeso).filter(Objects::nonNull)
+                        .min(Integer::compare).orElse(1);
+                if (dist.get(atual) != Integer.MAX_VALUE && dist.get(atual) + peso < dist.get(vizinho)) {
+                    dist.put(vizinho, dist.get(atual) + peso);
+                    anterior.put(vizinho, atual);
+                    fila.add(vizinho);
+                }
+            }
+        }
+
+        if (dist.get(fim) == Integer.MAX_VALUE) {
+            return new Caminho(List.of(), -1);
+        }
+        LinkedList<String> caminho = new LinkedList<>();
+        for (Vertice v = fim; v != null; v = anterior.get(v)) {
+            caminho.addFirst(v.getNome());
+        }
+        return new Caminho(caminho, dist.get(fim));
+    }
+
+    public List<Vertice> getVertices() {
+        return vertices;
+    }
+
 
     @Override
     public String toString() {
